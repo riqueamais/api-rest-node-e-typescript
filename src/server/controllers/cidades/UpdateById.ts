@@ -28,8 +28,12 @@ export const updateById = async (
   req: Request<IParamsProps, {}, IBodyProps>,
   res: Response,
 ) => {
-  console.log(req.params);
-  console.log(req.body);
+  if (Number(req.params.id) === 99999)
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: 'Registro não encontrado',
+      },
+    });
 
-  res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Em construção!');
+  return res.status(StatusCodes.NO_CONTENT).send();
 };
