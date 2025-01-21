@@ -3,20 +3,20 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 import { validation } from '../../shared/middlewares';
 
-interface ICidade {
-  nome: string;
+interface IParamsProps {
+  id?: number;
 }
 
-export const createValidation = validation((getSchema) => ({
-  body: getSchema<ICidade>(
+export const getByIdValidation = validation((getSchema) => ({
+  params: getSchema<IParamsProps>(
     yup.object().shape({
-      nome: yup.string().required().min(3),
+      id: yup.number().integer().required().moreThan(0),
     }),
   ),
 }));
 
-export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {
-  console.log(req.body);
+export const getById = async (req: Request<IParamsProps>, res: Response) => {
+  console.log(req.params);
 
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Em construção!');
 };
